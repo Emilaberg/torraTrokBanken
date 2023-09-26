@@ -147,10 +147,10 @@ void StartSession(int userSessionId)
     {
         //welcome user!
         Console.WriteLine($"Welcome back! {userSessionName}");
-        Console.WriteLine($"Your savings is {users[userSessionId].savingsAccount.GetSum()}\n");
-        Console.WriteLine($"Your salary account is {users[userSessionId].salaryAccount.GetSum()}\n");
+        Console.WriteLine($"Your savings is {users[userSessionId].savingsAccount.GetSum()} SEK\n");
+        Console.WriteLine($"Your salary account is {users[userSessionId].salaryAccount.GetSum()} SEK\n");
 
-        Console.Write("Do you want to (T)ransfer money or (L)ogout? : ");
+        Console.Write("Do you want to (D)eposit money? or (T)ransfer money or (L)ogout?: ");
         string? input = Console.ReadLine();
         if (input.ToUpper() == "L")
         {
@@ -174,6 +174,11 @@ void StartSession(int userSessionId)
                 Console.Clear();
             }
         }
+        else if (input.ToUpper() == "D")
+        {
+            AddMoney(userSessionId);
+
+        }
     }
 }
 
@@ -193,7 +198,7 @@ bool TransferUserMoney(int userSessionId)
     Console.WriteLine("How much do you want to transfer?");
     Console.Write(": ");
     int amount = Int32.Parse(Console.ReadLine());
-
+    Thread.Sleep(2000);
     if(users[userSessionId].TransferMoney(from, amount))
     {
         Console.WriteLine($"transferred {amount} kr from {from} to {to}");
@@ -207,7 +212,30 @@ bool TransferUserMoney(int userSessionId)
             Console.Clear();
         }
         return true;
+    }else
+    {
+        Console.WriteLine("You don't have a enough money...");
+        Thread.Sleep(1000);
     }
     return false;
 }
 
+bool AddMoney(int userSessionId)
+{
+    Console.WriteLine("How much money do you want to add?");
+    Console.Write(": ");
+    int amount = Int32.Parse(Console.ReadLine());
+    users[userSessionId].Deposit(amount);
+    Thread.Sleep(2000);
+    Console.WriteLine("transfer successfull!");
+    Thread.Sleep(1000);
+    Console.WriteLine("reverting");
+    Thread.Sleep(1000);
+    for (int i = 0; i < 3; i++)
+    {
+        Thread.Sleep(400);
+        Console.WriteLine("\r.");
+        Console.Clear();
+    }
+    return false;
+}

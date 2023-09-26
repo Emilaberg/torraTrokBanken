@@ -41,6 +41,11 @@
 
         public bool TransferMoney(string from, int amount)
         {
+            //Validation
+            if(amount > savingsAccount.GetSum()) {
+                // doesnt work
+                return false;
+            }
 
             if(from.ToUpper() == "SAVINGS")
             {
@@ -54,6 +59,14 @@
                     return false;
                 }
             }
+
+            //Validation
+            if (amount > salaryAccount.GetSum())
+            {
+                // doesnt work
+                return false;
+            }
+
             if (from.ToUpper() == "SALARY")
             {
                 if (!salaryAccount.TransferOut(amount))
@@ -69,5 +82,15 @@
 
             return true;
         }
+
+        public bool Deposit(int amount)
+        {
+            if (!savingsAccount.TransferIn(amount))
+            {
+                return false;
+            }
+            return true;
+        }
+
     }
 }
