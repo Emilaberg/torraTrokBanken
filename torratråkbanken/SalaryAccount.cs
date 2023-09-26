@@ -19,5 +19,17 @@ namespace torratråkbanken
         {
             return money;
         }
+        public bool TransferOut(int amount)
+        {
+            money -= amount;
+            return true;
+        }
+
+        public bool TransferIn(int amount)
+        {
+            money += amount;
+            return true;
+        }
+
     }
 }

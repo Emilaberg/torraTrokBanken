@@ -18,6 +18,10 @@
         {
             return username;
         }
+        public string GetPassword()
+        {
+            return password;
+        }
 
         public void CreateSavingsAccount()
         {
@@ -28,7 +32,42 @@
         public void CreateSalaryAccount()
         {
             salaryAccount = new(userId);
-            
+        }
+
+        public int GetUserId()
+        {
+            return userId;
+        }
+
+        public bool TransferMoney(string from, int amount)
+        {
+
+            if(from.ToUpper() == "SAVINGS")
+            {
+                if(!savingsAccount.TransferOut(amount))
+                {
+                    return false;
+                }
+
+                if(!salaryAccount.TransferIn(amount))
+                {
+                    return false;
+                }
+            }
+            if (from.ToUpper() == "SALARY")
+            {
+                if (!salaryAccount.TransferOut(amount))
+                {
+                    return false;
+                }
+
+                if (!savingsAccount.TransferIn(amount))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }
