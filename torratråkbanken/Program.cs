@@ -9,20 +9,16 @@
 //Om användaren vill logga ut, fråga om användaren vill logga in eller skapa konto igen.
 using torratråkbanken;
 
-List<User> users = new();
+//List<User> users = new();
+Dictionary<int, User> users = new();
 
+int userId = 0;
+bool isLoggedIn = false;
 
-bool isLoggedIn = true;
-
-while (isLoggedIn)
-{
-    WelcomeUser();
-}
-
+WelcomeUser();
 
 void WelcomeUser()
 {
-    Console.Clear();
     Console.WriteLine("************************************");
     Console.WriteLine("*****HELLO Welcome to Our bank!*****");
     Console.WriteLine("***(L)ogin or (C)reate an account***");
@@ -37,23 +33,29 @@ void LoginUser()
     Console.Write("username : ");
     string? username = Console.ReadLine();
     Console.Write("password : ");
-    int password = int.Parse(Console.ReadLine());
+    string password = Console.ReadLine();
 
     for (int i = 0; i < users.Count(); i++)
     {
 
     }
 
-    foreach (User user in users)
-    {
-
-        Console.WriteLine(user);
-    }
+    
 }
 
-void RegisterUser(string username, int password)
+int RegisterUser()
 {
-    User newUser = new(username, password);
+    Console.Write("New username : ");
+    string? username = Console.ReadLine();
+    Console.Write("New password : ");
+    string? password = Console.ReadLine();
+    
+    //Adding new user
+    User _ = new(username, password, userId);
+    users.Add(userId, _); // setting new user in dictonary with a key value with userId
+    userId++;
+
+    return userId - 1;
 }
 
 bool ValidateIfUserExits(string input)
@@ -64,15 +66,28 @@ bool ValidateIfUserExits(string input)
     }
     else if (input.ToUpper() == "C")
     {
-        RegisterUser();
+        int sessionId = RegisterUser();
+        StartSession(sessionId);
     }
     else
     {
         Console.WriteLine("something went wrong, try again...");
     }
 
-
-
-
     return true;
+}
+
+void StartSession(int userSessionId)
+{
+    isLoggedIn = true;
+
+    string userSessionName = users[userSessionId].GetUsername();
+
+    while (isLoggedIn)
+    {
+        //welcome user!
+        Console.WriteLine($"Welcome back! {userSessionName}");
+        Console.ReadKey(true);
+
+    }
 }
