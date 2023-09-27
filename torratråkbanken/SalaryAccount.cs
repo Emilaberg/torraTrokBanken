@@ -1,7 +1,7 @@
 ﻿
 namespace torratråkbanken
 {
-    
+
     internal class SalaryAccount
     {
         int userId;
@@ -9,6 +9,12 @@ namespace torratråkbanken
         public SalaryAccount(int userId)
         {
             this.userId = userId;
+        }
+        public void GenerateStartingSum()
+        {
+            Random rng = new Random();
+            decimal money = rng.Next(999, 10000);
+            this.money = money;
         }
 
         public int SalaryAccountUserId()

@@ -32,6 +32,7 @@
         public void CreateSalaryAccount()
         {
             salaryAccount = new(userId);
+            salaryAccount.GenerateStartingSum();
         }
 
         public int GetUserId()
@@ -42,19 +43,20 @@
         public bool TransferMoney(string from, int amount)
         {
             //Validation
-            if(amount > savingsAccount.GetSum()) {
+            if (amount > savingsAccount.GetSum())
+            {
                 // doesnt work
                 return false;
             }
 
-            if(from.ToUpper() == "SAVINGS")
+            if (from.ToUpper() == "SAVINGS")
             {
-                if(!savingsAccount.TransferOut(amount))
+                if (!savingsAccount.TransferOut(amount))
                 {
                     return false;
                 }
 
-                if(!salaryAccount.TransferIn(amount))
+                if (!salaryAccount.TransferIn(amount))
                 {
                     return false;
                 }
